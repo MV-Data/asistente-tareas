@@ -11,7 +11,7 @@ def añadir_tarea():
 
 
 st.title("Mi Asistente Personal")
-st.subheader("Desarrolado Alicia Linares.\n Soluciones de datos")
+st.subheader("Desarrollado por Alicia Linares y sus arepas.\n Soluciones de datos")
 st.write('El objetivo de esta app es la de incrementar su productividad')
 
 for index,tarea in enumerate(tareas):

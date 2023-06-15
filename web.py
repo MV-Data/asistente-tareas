@@ -16,14 +16,12 @@ st.write('El objetivo de esta app es la de incrementar su productividad')
 
 tareas_eliminar = []
 
-for index in range(len(tareas)-1, -1, -1):
-    tarea = tareas[index]
+for index, tarea in enumerate(tareas):
     checkbox = st.checkbox(tarea, key=f"checkbox_{index}")
     if checkbox:
         tareas_eliminar.append(index)
 
-for index in tareas_eliminar:
-    tarea = tareas[index]
+for index in sorted(tareas_eliminar, reverse=True):
     tareas.pop(index)
     del st.session_state[f"checkbox_{index}"]
 

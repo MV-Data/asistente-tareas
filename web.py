@@ -19,17 +19,15 @@ tareas_eliminar = []
 for index, tarea in enumerate(tareas):
     checkbox = st.checkbox(tarea, key=f"checkbox_{index}")
     if checkbox:
-        tareas_eliminar.append(tarea)
-        #tareas.pop(index)
-        #functions.write_tareas(tareas)
-        #del st.session_state[tarea]
-        #st.experimental_rerun()
-        #       
-for tarea in tareas_eliminar:
-    tareas.remove(tarea)
-    del st.session_state[tarea]
-    
+        tareas_eliminar.append(index)
+
+for index in tareas_eliminar:
+    tarea = tareas[index]
+    tareas.pop(index)
+    del st.session_state[f"checkbox_{index}"]
+
 functions.write_tareas(tareas)
 
 st.text_input(label="", placeholder="Ingrese Tarea", 
               on_change= añadir_tarea, key="nueva_tarea")
+

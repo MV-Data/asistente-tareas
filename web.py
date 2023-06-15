@@ -10,21 +10,39 @@ def añadir_tarea():
     checkbox_states[tarea] = False
     functions.write_tareas(tareas)
 
+def eliminar_tarea(tarea):
+    tareas.remove(tarea)
+    del checkbox_states[tarea]
+
+def confirmar_eliminar(tarea):
+    st.session_state["tarea_a_eliminar"] = tarea
+
+def cancelar_eliminar():
+    st.session_state["tarea_a_eliminar"] = None
+
 st.title("Mi Asistente Personal")
 st.subheader("Desarrollado por Alicia Linares y sus arepas.\n Soluciones de datos")
 st.write('El objetivo de esta app es incrementar su productividad.')
 st.markdown("Haga doble click en la tarea que desea eliminar.\n")
-tareas_eliminar = []
+
+tarea_a_eliminar = st.session_state.get("tarea_a_eliminar")
 
 for tarea in tareas:
     checkbox_state = st.checkbox(tarea, key=tarea, value=checkbox_states[tarea])
     checkbox_states[tarea] = checkbox_state
-    if checkbox_state:
-        tareas_eliminar.append(tarea)
+    if checkbox_state and tarea != tarea_a_eliminar:
+        confirmar_eliminar(tarea)
 
-for index,tarea in enumerate(tareas_eliminar):
-    tareas.pop(index)
-    del checkbox_states[tarea]
+if tarea_a_eliminar:
+    st.write(f"¿Estás seguro de eliminar la tarea '{tarea_a_eliminar}'?")
+    col1, col2 = st.columns(2)
+    with col1:
+        if st.button("Sí"):
+            eliminar_tarea(tarea_a_eliminar)
+            cancelar_eliminar()
+    with col2:
+        if st.button("No"):
+            cancelar_eliminar()
 
 functions.write_tareas(tareas)
 

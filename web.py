@@ -22,8 +22,8 @@ for tarea in tareas:
     if checkbox_state:
         tareas_eliminar.append(tarea)
 
-for tarea in tareas_eliminar:
-    tareas.remove(tarea)
+for index,tarea in enumerate(tareas_eliminar):
+    tareas.pop(index)
     del checkbox_states[tarea]
 
 functions.write_tareas(tareas)

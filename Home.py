@@ -1,6 +1,9 @@
 import streamlit as st
 import functions
 
+
+#st.set_page_config(layout="wide") si quiero configurar para que se ajuste al tamaño, x ej en móviles
+
 tareas = functions.get_tareas()
 checkbox_states = {tarea: False for tarea in tareas}
 
@@ -22,8 +25,9 @@ def cancelar_eliminar():
 
 st.title("Mi Asistente Personal")
 st.subheader("Desarrollado por Alicia Linares y sus arepas.\n Soluciones de datos")
-st.write('El objetivo de esta app es incrementar su productividad.')
-st.markdown("Haga doble click en la tarea que desea eliminar.\n")
+#st.write('El objetivo de esta app es incrementar su productividad.')
+st.markdown("<h7>Haga <b>doble click</b> en la tarea que desea eliminar.\n</h7>", 
+            unsafe_allow_html=True)
 
 tarea_a_eliminar = st.session_state.get("tarea_a_eliminar")
 
@@ -46,4 +50,5 @@ if tarea_a_eliminar:
 
 functions.write_tareas(tareas)
 
-st.text_input(label="", placeholder="Ingrese Tarea", on_change=añadir_tarea, key="nueva_tarea")
+st.text_input(label="", placeholder="Ingrese Tarea", 
+              on_change=añadir_tarea, key="nueva_tarea")

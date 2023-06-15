@@ -1,32 +1,30 @@
 import streamlit as st
 import functions
 
-
 tareas = functions.get_tareas()
+checkbox_states = {}
 
 def añadir_tarea():
-   tarea =  st.session_state["nueva_tarea"] + "\n"
-   tareas.append(tarea)
-   functions.write_tareas(tareas)
-
+    tarea = st.session_state["nueva_tarea"] + "\n"
+    tareas.append(tarea)
+    checkbox_states[tarea] = False
+    functions.write_tareas(tareas)
 
 st.title("Mi Asistente Personal")
 st.subheader("Desarrollado por Alicia Linares y sus arepas.\n Soluciones de datos")
-st.write('El objetivo de esta app es la de incrementar su productividad')
+st.write('El objetivo de esta app es incrementar su productividad')
 
-tareas_eliminar = []
+for tarea in tareas:
+    checkbox_state = st.checkbox(tarea, key=tarea, value=checkbox_states[tarea])
+    checkbox_states[tarea] = checkbox_state
 
-for index, tarea in enumerate(tareas):
-    checkbox = st.checkbox(tarea, key=f"checkbox_{index}")
-    if checkbox:
-        tareas_eliminar.append(index)
+tareas_eliminar = [tarea for tarea, checkbox_state in checkbox_states.items() if checkbox_state]
 
-for index in sorted(tareas_eliminar, reverse=True):
-    tareas.pop(index)
-    del st.session_state[f"checkbox_{index}"]
+for tarea in tareas_eliminar:
+    tareas.remove(tarea)
 
 functions.write_tareas(tareas)
 
-st.text_input(label="", placeholder="Ingrese Tarea", 
-              on_change= añadir_tarea, key="nueva_tarea")
+st.text_input(label="", placeholder="Ingrese Tarea", on_change=añadir_tarea, key="nueva_tarea")
+
 

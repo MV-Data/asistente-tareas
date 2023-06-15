@@ -12,7 +12,7 @@ def añadir_tarea():
 
 st.title("Mi Asistente Personal")
 st.subheader("Desarrollado por Alicia Linares y sus arepas.\n Soluciones de datos")
-st.write('El objetivo de esta app es incrementar su productividad')
+st.write('El objetivo de esta app es incrementar su productividad\n Haga doble click en la tarea que desea eliminar')
 
 tareas_eliminar = []
 
